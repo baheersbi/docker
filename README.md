@@ -21,3 +21,9 @@ Explore containerization with our Docker Tutorials repository. Perfect for begin
        - ```docker run --name server3 -e MYSQL_ROOT_PASSWORD=_your_password_ -p 3309 -d mysql```
      > You can run as many servers as you like using the above command but you should change the name and port number
 8. Verify the running status of your MySQL servers by typing ```docker ps``` and it will return a list of servers which are currently running.
+9. Login to the MySQL Servers:
+   > The password is not visible when you type.
+11. Open three Terminal or Command Prompt Windows and execute the following commands:
+    - Terminal/Command Prompt 1: ```docker exec -it server1 mysql -P 3307 -u root -p``` and press enter and then your password. 
+    - Terminal/Command Prompt 2: ```docker exec -it server2 mysql -P 3308 -u root -p``` and press enter and then your password.
+    - Terminal/Command Prompt 3: ```docker exec -it server3 mysql -P 3309 -u root -p``` and press enter and then your password.
