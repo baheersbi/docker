@@ -27,3 +27,9 @@ Explore containerization with our Docker Tutorials repository. Perfect for begin
     - Terminal/Command Prompt 1: ```docker exec -it server1 mysql -P 3307 -u root -p``` and press enter and then your password. 
     - Terminal/Command Prompt 2: ```docker exec -it server2 mysql -P 3308 -u root -p``` and press enter and then your password.
     - Terminal/Command Prompt 3: ```docker exec -it server3 mysql -P 3309 -u root -p``` and press enter and then your password.
+## phpMyAdmin - A web interface for MySQL and MariaDB.
+Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We are assuming you will create a new MySQL container to access via phpMyAdmin. 
+1. **Create a Docker Network:** ```docker network create mysql-network```
+2. **Run MySQL Container:** ```docker run --name PHPMyAdmin -e MYSQL_ROOT_PASSWORD=123456 --network mysql-network -p 3314:3306 -d mysql```
+3. **Run PhpMyAdmin Container:** ```docker run --name MySQLAdmin -d --network mysql-network -e PMA_HOST=PHPMyAdmin -p 8080:80 phpmyadmin/phpmyadmin```
+4. **Access PhpMyAdmin:** Open a browser window and navigate to ```http://localhost:8080``` and login with user ```root``` and password ```123456```
