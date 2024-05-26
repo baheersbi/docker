@@ -37,7 +37,7 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
 ## Using Apache Cassandra with Docker
 1. Pull the Docker image:
    ```bash
-   docker pul cassandra
+   docker pull cassandra
    ```
 2. Create a Docker Network:
    ```bash
