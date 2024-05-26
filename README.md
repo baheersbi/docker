@@ -73,7 +73,7 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    > ```bash
    > docker exec -it cassandra-seed cat /etc/cassandra/cassandra.yaml | grep -i seeds
    > ```
-7. Star Bash Shell in Cassandra Container (Seed Node):
+7. Start Bash Shell in Cassandra Container (Seed Node):
    ```bash
    docker exec -it cassandra-seed bash
    ```    
