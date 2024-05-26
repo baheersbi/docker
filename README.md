@@ -103,7 +103,7 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    [connection]
    request_timeout = 6000
    ```
-7. Verify Data Center Names:
+7. Verify the Data Center Names:
    ```bash
    SELECT data_center FROM system.local;
    ```
@@ -111,3 +111,21 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    ```bash
    SELECT peer, data_center FROM system.peers;
    ``` 
+
+9. Create a table
+   ```sql
+   CREATE TABLE example_table (
+    id UUID PRIMARY KEY,
+    name text,
+    age int,
+    email text
+   );
+
+   ```
+9. Restart all containers
+   ```bash
+   docker restart cassandra-seed
+   docker restart cassandra-node1
+   docker restart cassandra-node2
+   ```
+11. Create a table
