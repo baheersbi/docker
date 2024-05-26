@@ -33,3 +33,81 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
 2. **Run MySQL Container:** ```docker run --name PHPMyAdmin -e MYSQL_ROOT_PASSWORD=123456 --network mysql-network -p 3314:3306 -d mysql```
 3. **Run PhpMyAdmin Container:** ```docker run --name MySQLAdmin -d --network mysql-network -e PMA_HOST=PHPMyAdmin -p 8080:80 phpmyadmin/phpmyadmin```
 4. **Access PhpMyAdmin:** Open a browser window and navigate to ```http://localhost:8080``` and login with user ```root``` and password ```123456```
+
+## Using Apache Cassandra with Docker
+1. Pull the Docker image:
+   ```bash
+   docker pul cassandra
+   ```
+2. Create a Docker Network:
+   ```bash
+   docker network create cassandra-net
+   ```
+3. Start the Seed Node:
+   ```bash
+   docker run --name cassandra-seed --network cassandra-net -d cassandra
+   ```
+4. Start two additional nodes:
+   ```bash
+   docker run --name cassandra-node1 --network cassandra-net -e CASSANDRA_SEEDS=cassandra-seed -d cassandra
+   ```
+   ```bash
+   docker run --name cassandra-node2 --network cassandra-net -e CASSANDRA_SEEDS=cassandra-seed -d cassandra
+   ```
+5. Inspect the network configuration:
+    ```bash
+   docker network inspect cassandra-net
+    ```
+6. Check the status of your nodes:
+    ```bash
+    docker exec -it cassandra-seed nodetool status
+    ```
+   > ***Note:*** Identify which node is the seed node:
+   >
+   > ```bash
+   > docker exec -it cassandra-node1 cat /etc/cassandra/cassandra.yaml | grep -i seeds
+   > ```
+   > ```bash
+   > docker exec -it cassandra-node2 cat /etc/cassandra/cassandra.yaml | grep -i seeds
+   > ```
+   > ```bash
+   > docker exec -it cassandra-seed cat /etc/cassandra/cassandra.yaml | grep -i seeds
+   > ```
+7. Star Bash Shell in Cassandra Container (Seed Node):
+   ```bash
+   docker exec -it cassandra-seed bash
+   ```    
+8. Update the package index from sources:
+   ```bash
+   apt update
+   ```
+9. Install the ```nano``` editor:
+   ```bash
+   apt install nano
+   ```
+9. Increment request timeout:
+   8.1. Navigate to cassandra folder
+   ```bash
+   cd ~/.cassandra/
+   ```
+   8.2. List the current content of this folder and see if ```cqlshrc``` file exists. Else, create it:
+   ```bash
+   touch cqlshrc
+   ```
+   8.3. Open the ```cqlshrc``` file using ```nano``` editor:
+   ```bash
+   nano cqlshrc
+   ```
+   8.4. Add the following two lines and save and exit ```nano``` (```Ctrl + O``` to save, Enter, then ```Ctrl + X``` to exit).
+   ```bash
+   [connection]
+   request_timeout = 6000
+   ```
+7. Verify Data Center Names:
+   ```bash
+   SELECT data_center FROM system.local;
+   ```
+   
+   ```bash
+   SELECT peer, data_center FROM system.peers;
+   ``` 
