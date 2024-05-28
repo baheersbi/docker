@@ -141,3 +141,5 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
     ```bash
     DESCRIBE TABLES;
     ```
+13. Verify if the data is replicated.
+    13.1. Enter the node1 by opening a new Command Prompt/Terminal window and type ```docker exec -it cassandra-node1 cqlsh``` and press Enter. This will take you to the Cassandra SQL Shell and now you can list the KEYSPACES created in the Seed Node (cassandra-seed) ```DESCRIBE KEYSPACES;```. The ```iot_data``` Keyspace should list. 
