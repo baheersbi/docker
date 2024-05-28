@@ -103,7 +103,11 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    [connection]
    request_timeout = 6000
    ```
-7. Verify the Data Center Names:
+6. Switch to Cassandra SQL Prompt:
+   ```bash
+   cqlsh
+   ```
+8. Verify the Data Center Names:
    ```bash
    SELECT data_center FROM system.local;
    ```
@@ -111,15 +115,15 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    ```bash
    SELECT peer, data_center FROM system.peers;
    ``` 
-8. Create a ```KEYSPACE```:
+9. Create a ```KEYSPACE```:
    ```bash
    CREATE KEYSPACE iot_data WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1': 3};
    ```
-9. Verify if the ```KEYSPACE``` named ```iot_data``` is created
+10. Verify if the ```KEYSPACE``` named ```iot_data``` is created
    ```bash
    DESCRIBE KEYSPACES;
    ```
-10. Use the ```iot_data``` Keyspace:
+11. Use the ```iot_data``` Keyspace:
     ```bash
     USE iot_data
     ```
