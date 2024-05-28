@@ -137,10 +137,3 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
     ```bash
     DESCRIBE TABLES;
     ```
-9. Restart all containers
-   ```bash
-   docker restart cassandra-seed
-   docker restart cassandra-node1
-   docker restart cassandra-node2
-   ```
-11. Create a table
