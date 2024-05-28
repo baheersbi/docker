@@ -111,8 +111,19 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    ```bash
    SELECT peer, data_center FROM system.peers;
    ``` 
-
-9. Create a table
+8. Create a ```KEYSPACE```:
+   ```bash
+   CREATE KEYSPACE iot_data WITH replication = {'class': 'NetworkTopologyStrategy', 'datacenter1': 3};
+   ```
+9. Verify if the ```KEYSPACE``` named ```iot_data``` is created
+   ```bash
+   DESCRIBE KEYSPACES;
+   ```
+10. Use the ```iot_data``` Keyspace:
+    ```bash
+    USE iot_data
+    ```
+12. Create a table
    ```sql
    CREATE TABLE example_table (
     id UUID PRIMARY KEY,
@@ -122,6 +133,10 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    );
 
    ```
+12. Verify if the table is created:
+    ```bash
+    DESCRIBE TABLES;
+    ```
 9. Restart all containers
    ```bash
    docker restart cassandra-seed
