@@ -45,14 +45,14 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    ```
 3. Start the Seed Node:
    ```bash
-   docker run --name cassandra-seed --network cassandra-net -d cassandra
+   docker run --name cassandra-seed --network cassandra-net -p 9043:9042 -d cassandra
    ```
 4. Start two additional nodes:
    ```bash
-   docker run --name cassandra-node1 --network cassandra-net -e CASSANDRA_SEEDS=cassandra-seed -d cassandra
+   docker run --name cassandra-node1 --network cassandra-net -e CASSANDRA_SEEDS=cassandra-seed -p 9044:9042 -d cassandra
    ```
    ```bash
-   docker run --name cassandra-node2 --network cassandra-net -e CASSANDRA_SEEDS=cassandra-seed -d cassandra
+   docker run --name cassandra-node2 --network cassandra-net -e CASSANDRA_SEEDS=cassandra-seed -p 9045:9042 -d cassandra
    ```
 5. Inspect the network configuration:
     ```bash
@@ -90,16 +90,18 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
    ```bash
    cd ~/.cassandra/
    ```
-   8.2. List the current content of this folder and see if ```cqlshrc``` file exists. Else, create it:
+   > If it fails to switch to the ```.cassandra``` folder, then you should create it ```mkdir -p ~/.cassandra```
+   
+   8.2. Create or edit the ```cqlshrc``` file:
    ```bash
-   touch cqlshrc
-   ```
-   8.3. Open the ```cqlshrc``` file using ```nano``` editor:
-   ```bash
-   nano cqlshrc
+   nano ~/.cassandra/cqlshrc
    ```
    8.4. Add the following two lines and save and exit ```nano``` (```Ctrl + O``` to save, Enter, then ```Ctrl + X``` to exit).
    ```bash
+   [authentication]
+   username = your_username
+   password = your_password
+   
    [connection]
    request_timeout = 6000
    ```
@@ -142,4 +144,19 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
     DESCRIBE TABLES;
     ```
 13. Verify if the data is replicated.
-    13.1. Enter the node1 by opening a new Command Prompt/Terminal window and type ```docker exec -it cassandra-node1 cqlsh``` and press Enter. This will take you to the Cassandra SQL Shell and now you can list the KEYSPACES created in the Seed Node (cassandra-seed) ```DESCRIBE KEYSPACES;```. The ```iot_data``` Keyspace should list. 
+    13.1. Enter the node1 by opening a new Command Prompt/Terminal window and type ```docker exec -it cassandra-node1 cqlsh``` and press Enter. This will take you to the Cassandra SQL Shell and now you can list the KEYSPACES created in the Seed Node (cassandra-seed) ```DESCRIBE KEYSPACES;```. The ```iot_data``` Keyspace should list.
+
+14. Insert some data:
+    ```sql
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Alice Johnson', 29, 'alice.johnson@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Bob Smith', 34, 'bob.smith@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Charlie Brown', 22, 'charlie.brown@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'David Wilson', 45, 'david.wilson@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Eva Adams', 31, 'eva.adams@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Frank Miller', 28, 'frank.miller@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Grace Lee', 37, 'grace.lee@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Henry Walker', 26, 'henry.walker@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Isabella Martinez', 33, 'isabella.martinez@example.com');
+    INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Jack Davis', 40, 'jack.davis@example.com');
+
+    ```
