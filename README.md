@@ -160,3 +160,30 @@ Connecting to a MySQL instance running in a Docker container via PhpMyAdmin. We 
     INSERT INTO example_table (id, name, age, email) VALUES (uuid(), 'Jack Davis', 40, 'jack.davis@example.com');
 
     ```
+### Primary Key Structure (Partition Key)
+   ```sql
+   CREATE TABLE users (
+    user_id UUID,
+    name text,
+    age int,
+    email text,
+    country text,
+    PRIMARY KEY (country, user_id)
+   );
+   ```
+   > - ```country``` is the **partition** key.
+   >    - The partition key (```country```) determines how the data is distributed across nodes. Rows with the same country value are stored on the same node, making queries that filter by country efficient.
+   > - ```user_id``` is the clustering column.
+
+   ```sql
+   INSERT INTO users (user_id, name, age, email, country) VALUES (uuid(), 'Alice Johnson', 29, 'alice.johnson@example.com', 'USA');
+   INSERT INTO users (user_id, name, age, email, country) VALUES (uuid(), 'Bob Smith', 34, 'bob.smith@example.com', 'Canada');
+   INSERT INTO users (user_id, name, age, email, country) VALUES (uuid(), 'Charlie Brown', 22, 'charlie.brown@example.com', 'USA');
+   INSERT INTO users (user_id, name, age, email, country) VALUES (uuid(), 'David Wilson', 45, 'david.wilson@example.com', 'UK');
+   ```
+#### Tracing Queries
+   ```sql
+   TRACING ON;
+   SELECT * FROM users WHERE country = 'USA';
+   TRACING OFF;
+   ```
