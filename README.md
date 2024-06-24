@@ -2,6 +2,7 @@
 Explore containerization with our Docker Tutorials repository. Perfect for beginners and seasoned devs alike, it guides you from basic setups to advanced deployments, offering practical examples and best practices.
 
 ## Get Started
+> For video tutorial, watch here on YouTube: https://www.youtube.com/watch?v=XQJNqh0Mnh8
 1. Download Docker from https://www.docker.com/products/docker-desktop/
    > Mac users should verify their chip type before downloading by going to the Apple icon on the top left corner and selecting ```About This Mac.```
 2. Install it on [Windows](https://docs.docker.com/desktop/install/windows-install/) or [Mac](https://docs.docker.com/desktop/install/mac-install/)
